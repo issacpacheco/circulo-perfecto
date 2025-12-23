@@ -1,39 +1,30 @@
-import React from "react";
-
 interface ScoreBoardProps {
-    currentScore: number | null;
-    bestScore: number;
-    onReset: () => void;
+    score: number | null;
+    bestScore: number | null;
 }
 
-export default function ScoreBoard({ currentScore, bestScore, onReset }: ScoreBoardProps) {
+export default function ScoreBoard({ score, bestScore }: ScoreBoardProps) {
     return (
-        <div className="flex flex-col items-center mt-8 text-white z-10 gap-6">
-            <div className="flex gap-12 justify-center items-center">
-                <div className="flex flex-col items-center">
-                    <span className="text-slate-300 text-sm uppercase tracking-wider font-semibold mb-1">Actual</span>
-                    <span className="text-6xl font-mono font-bold text-glow transition-all duration-300">
-                        {currentScore !== null ? `${currentScore.toFixed(1)}%` : "--"}
-                    </span>
-                </div>
-
-                <div className="w-px h-16 bg-white/20"></div>
-
-                <div className="flex flex-col items-center relative group">
-                    <span className="text-teal-200 text-sm uppercase tracking-wider font-semibold mb-1">Mejor (Sesión)</span>
-                    <span className="text-6xl font-mono font-bold text-teal-300 drop-shadow-lg transition-all duration-300">
-                        {bestScore > 0 ? `${bestScore.toFixed(1)}%` : "--"}
-                    </span>
+        <div className="absolute top-8 left-0 right-0 flex gap-12 z-30 justify-center pointer-events-none">
+            <div className="flex flex-col items-center group">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-bold mb-1 transition-colors group-hover:text-white/50">
+                    Actual
+                </span>
+                <div className="text-5xl font-black text-white tabular-nums drop-shadow-lg">
+                    {score !== null ? `${score.toFixed(0)}%` : "0%"}
                 </div>
             </div>
 
-            <button
-                onClick={onReset}
-                className="px-4 py-2 text-sm text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-colors backdrop-blur-sm border border-white/5"
-                title="Reiniciar récord de sesión"
-            >
-                Reiniciar Récord
-            </button>
+            <div className="w-[1px] h-10 bg-white/10 self-end mb-2" />
+
+            <div className="flex flex-col items-center group">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-teal-500/50 font-bold mb-1 transition-colors group-hover:text-teal-400">
+                    Récord
+                </span>
+                <div className="text-5xl font-black text-teal-400 tabular-nums drop-shadow-[0_0_10px_rgba(45,212,191,0.3)]">
+                    {bestScore !== null ? `${bestScore.toFixed(0)}%` : "0%"}
+                </div>
+            </div>
         </div>
     );
 }

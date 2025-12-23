@@ -2,22 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-glow {
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  }
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
 }
 
 body {
-  background: radial-gradient(circle at 50% -20%, #0ba0a0, #0f172a);
-  min-height: 100vh;
-  color: #fff;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Gradiente radial para dar profundidad al fondo */
+  background-image: radial-gradient(circle at 50% 50%, #111111 0%, #050505 100%);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1 {
-  font-size: 2rem;
-}
+@layer components {
 
-p {
-  font-size: 1.5rem;
+  /* Panel de cristal (Glassmorphism) optimizado */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Texto con gradiente para puntuaciones altas */
+  .text-gradient-neon {
+    background: linear-gradient(to right, #ffffff, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
+  }
 }

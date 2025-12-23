@@ -1,56 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import CanvasGame from "@/components/CanvasGame";
-import ScoreBoard from "@/components/ScoreBoard";
+import { useState } from "react";
+import CanvasGame from "@/components/CanvasGame"; //
+import ScoreBoard from "@/components/ScoreBoard"; //
 
 export default function Home() {
-  const [currentScore, setCurrentScore] = useState<number | null>(null);
-  const [bestScore, setBestScore] = useState<number>(0);
+  const [score, setScore] = useState<number | null>(null);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
-  useEffect(() => {
-    // Load from sessionStorage if available
-    const savedBest = sessionStorage.getItem("circle-game-best");
-    if (savedBest) {
-      setBestScore(parseFloat(savedBest));
-    }
-  }, []);
-
-  const handleScore = (score: number) => {
-    setCurrentScore(score);
-    if (score > bestScore) {
-      setBestScore(score);
-      sessionStorage.setItem("circle-game-best", score.toString());
-    }
-  };
-
-  const handleReset = () => {
-    setBestScore(0);
-    setCurrentScore(null); // Optional: also clear current score
-    sessionStorage.removeItem("circle-game-best");
+  const handleScore = (newScore: number) => {
+    setScore(newScore);
+    if (bestScore === null || newScore > bestScore) setBestScore(newScore);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 relative overflow-hidden bg-slate-900/95">
-      {/* Background Ambience - Brighter */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-teal-500/10 blur-[100px] pointer-events-none rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-[100px] h-[100px] bg-indigo-500/10 blur-[120px] pointer-events-none rounded-full"></div>
+    <main className="relative flex min-h-screen flex-col items-center justify-center p-6 select-none">
+      {/* Luces de fondo dinámicas */}
+      <div className="absolute top-[-15%] left-[-5%] w-[50%] h-[50%] bg-blue-600/10 blur-[150px] rounded-full animate-pulse" />
+      <div className="absolute bottom-[-15%] right-[-5%] w-[50%] h-[50%] bg-purple-600/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
 
-      <div className="z-10 w-full max-w-2xl flex flex-col items-center animate-in fade-in zoom-in duration-700">
-        <header className="text-center mb-2">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-200">
-            Círculo Perfecto
-          </h1>
-          <p className="text-slate-300 text-lg font-light tracking-wide">Dibuja la forma perfecta</p>
-        </header>
+      <ScoreBoard score={score} bestScore={bestScore} />
+
+      <div className="z-10 w-full max-w-2xl flex flex-col items-center">
+        <h1 className="text-white/[0.03] text-[12rem] font-black uppercase tracking-tighter absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10 italic">
+          Perfect
+        </h1>
 
         <CanvasGame onScore={handleScore} />
 
-        <ScoreBoard currentScore={currentScore} bestScore={bestScore} onReset={handleReset} />
-
-        <footer className="mt-12 text-slate-600 text-sm hover:text-slate-400 transition-colors">
-          Juego de Código Abierto
-        </footer>
+        <p className="mt-10 text-white/20 text-[10px] tracking-[0.6em] uppercase font-medium">
+          Dibuja con precisión el círculo
+        </p>
       </div>
     </main>
   );
