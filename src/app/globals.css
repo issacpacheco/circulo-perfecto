@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+body {
+  background: radial-gradient(circle at 50% -20%, #0ba0a0, #0f172a);
+  min-height: 100vh;
+  color: #fff;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.5rem;
+}
